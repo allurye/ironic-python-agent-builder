@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -eux
-set -o pipefail
-
 echo "Resolving the configuration drive for Ironic."
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
@@ -14,8 +11,18 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin
 # result. In the case of VFAT partitions, they would be upper case.
 CONFIG_DRIVE_LABEL="config-2"
 
-# Identify the number of devices
-device_count=$(lsblk -o PATH,LABEL | grep $CONFIG_DRIVE_LABEL | wc -l)
+# Wait until the device shows up
+while : ; do
+	# Identify the number of devices
+	device_count=$(lsblk -o PATH,LABEL | grep $CONFIG_DRIVE_LABEL | wc -l)
+	echo "device_count=$device_count"
+
+	[[ device_count -eq 0 ]] || break
+	sleep 5
+done
+
+set -eux
+set -o pipefail
 
 # Identify if we have an a publisher id set
 publisher_id=""

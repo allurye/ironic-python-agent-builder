@@ -3,6 +3,8 @@ Description=Ironic agent config drive setup
 Wants=network-pre.target
 Before=network-pre.target
 After=local-fs.target
+Requires=dev-sr0.device
+After=dev-sr0.device
 
 [Service]
 ExecStart=/bin/bash /usr/local/bin/ironic-python-agent-resolve-configdrive.sh
