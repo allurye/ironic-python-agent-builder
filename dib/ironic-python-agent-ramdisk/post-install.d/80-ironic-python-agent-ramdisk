@@ -72,6 +72,12 @@ DHCP=yes" > /etc/systemd/network/99-dhcp.network
             systemctl disable glean-early.service || true
             rm /usr/lib/systemd/system/glean-early.service
         fi
+	if [ -e /usr/lib/systemd/system/glean@.service ]; then
+		# Network interfaces controlled by Glean must be initialized
+		# only after the config drive is mounted. Otherwise glean might
+		# miss the config drive.
+		sed -e 's/glean-early.service/ironic-agent-resolve-config-drive.service/' -i /usr/lib/systemd/system/glean@.service
+	fi
         ;;
     sysv)
         update-rc.d iptables disable
