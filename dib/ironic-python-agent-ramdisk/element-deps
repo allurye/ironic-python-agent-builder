@@ -1,5 +1,4 @@
 ironic-ramdisk-base
-dhcp-all-interfaces
 ibft-interfaces
 install-static
 package-installs
