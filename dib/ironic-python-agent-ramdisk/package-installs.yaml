@@ -29,6 +29,11 @@ nvme-cli:
 open-iscsi:
 # smartctl is required for ATA secure erase.
 smartmontools:
+ifenslave:
+ethtool:
+net-tools:
+vlan:
+bridge-utils:
 
 libffi-dev:
     build-only: true
